@@ -29,3 +29,13 @@ class OtherColors(Enum):
     MAGENTA = ""
     CYAN = ""
     DEFAULT = ""
+
+class DotColor(Enum):
+    """
+    Some colors in dot files.
+    """
+    WHITE = "#ffffff"
+    LIGHT_GRAY = "#cccccc"
+    RED = "#ff0000"
+    GREEN = "#00ff00"
+    LIGHT_BLUE = "#aaaaff"
