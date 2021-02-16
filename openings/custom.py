@@ -15,7 +15,14 @@ if len(sys.argv) < 2:
     exit(0)
 
 branches = [
-    "$(start) e2-e4 e7-e5 Ng1-Nf3 Nb8-Nc6 Bf1-Bc4 Ng8-Nf6 d2-d4 $(1) $(2) $(3)",
+    "$(start) e2-e4 e7-e5 Ng1-Nf3 $(1-1) $(1-2)",
+    "$(1-1) Nb8-Nc6 Bf1-Bc4 $(1-1-1) $(1-1-2)",
+    "$(1-2) d7-d6 Bf1-Bc4 Qd8-Qe8 d2-d3 Bc8-Bg4 Bc1-Bg5 !W",
+
+    "$(1-1-1) d7-d6 d2-d4 Bc8-Be6 d4-d5 Be6-Bd7 Ng1-Nf3 Bd7-Bg4 Bc1-Bg5 Bg4xNf3 Qd1xBf3 Bg5xNf6 Qd8xBf6 Qf3xQf6 g7xQf6 $(1-1-1b)",
+    "$(1-1-1b) o-o f6-f5 e4xf5 f7-f6 Rd1-Re1 Nb8-Nd7 f2-f4 !W",
+    "$(1-1-2) Ng8-Nf6 d2-d4 $(1) $(2) $(3)",
+
     "$(1) Nf6xe4 e4xe5 Bf8-Bc5 Qd1-Qd5 !W",
     "$(2) Nc6xd4 Bc4xf7 Ke8xBf7 Nf3xe5 Kf7-Ke8 Qd1xd4 !W",
 
