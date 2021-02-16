@@ -38,7 +38,7 @@ class TreeMaker:
         pass
 
     @classmethod
-    def draw_node(self, index, name, color):
+    def draw_node(self, index, name, color, label_color):
         """
         Generates a node with a given name.
 
@@ -51,7 +51,8 @@ class TreeMaker:
         :return: A string corresponding to the node.
         """
         node = self.node_name + str(index) + "[label = \"" + name + "\", "
-        node += "style=\"filled\", fillcolor=\"" + color + "\""
+        node += "style = \"filled\", fillcolor = \"" + color + "\", "
+        node += "fontcolor = \"" + label_color + "\""
         node += "]"
         return node
 
@@ -101,7 +102,7 @@ class TreeMaker:
         return DotColor.WHITE
     
     @classmethod
-    def _generate_branches(self, current_branch_name, branches, file, previous_index=0):
+    def _generate_branches(self, current_branch_name, branches, file, previous_index=0, white_turn=True):
         """
         Helper method to generate the branches.
 
@@ -112,6 +113,8 @@ class TreeMaker:
         :param file: The file to write in.
 
         :param previous_index: The index of the previous node, use to draw the arrow between two branches.
+
+        :param turn: If turn is True, then it's whites' turn, otherwise it's blacks' turn.
 
         :return: True if everything could be generated, False otherwise.
         """
@@ -130,8 +133,12 @@ class TreeMaker:
         # draw all the moves of this branch
         for move in branch.moves:
 
+            # compute the fill color and the label color depending on whose turn it is
+            bg_color = DotColor.WHITE if white_turn else DotColor.BLACK
+            label_color = DotColor.WHITE if not white_turn else DotColor.BLACK
+
             # draw the current node
-            file.write(self.tab_size + TreeMaker.draw_node(self.node_index, move, DotColor.WHITE.value) + ";\n")
+            file.write(self.tab_size + TreeMaker.draw_node(self.node_index, move, bg_color.value, label_color.value) + ";\n")
 
             # if this is the first node being drawn of the branch (but not of the tree), draw an arrow with
             # the previous node
@@ -149,6 +156,9 @@ class TreeMaker:
             # not the first node anymore
             first_node = False
 
+            # change whose turn it is
+            white_turn = not white_turn
+
         # if the this branch is done and does get divided
         if not branch.is_divided():
 
@@ -156,7 +166,7 @@ class TreeMaker:
             color = TreeMaker.tag_to_color(branch.ending_tag).value
 
             # change the color of the last node accordingly
-            file.write(self.tab_size + TreeMaker.draw_node(self.node_index - 1, move, color) + ";\n")
+            file.write(self.tab_size + TreeMaker.draw_node(self.node_index - 1, move, color, DotColor.BLACK.value) + ";\n")
 
         # else if it does get divided
         else:
@@ -166,7 +176,8 @@ class TreeMaker:
 
             # recursive calls
             for next_branch_name in branch.next_nametags:
-                if not TreeMaker._generate_branches(next_branch_name, branches, file, previous_index=previous_index):
+                if not TreeMaker._generate_branches(next_branch_name, branches, file, 
+                                                    previous_index=previous_index, white_turn=white_turn):
                     return False
         return True
 

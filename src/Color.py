@@ -39,3 +39,4 @@ class DotColor(Enum):
     RED = "#ff0000"
     GREEN = "#00ff00"
     LIGHT_BLUE = "#aaaaff"
+    BLACK = "#000000"
