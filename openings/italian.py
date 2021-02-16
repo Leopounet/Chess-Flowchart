@@ -8,6 +8,12 @@ import src.Utils as Utils
 
 # print(Utils.is_valid_nametag(sys.argv[1]))
 
+if len(sys.argv) < 2:
+    print("Usage: python3 <opening>.py <filename>")
+    print("opening: The name of the opening you want to generate.")
+    print("filename: The name of the file to save the flowchart in.")
+    exit(0)
+
 branches = [
     "$(start) e2-e4 e7-e5 Ng1-Ng3 Nb8-Nc6 Bf1-Bc4 Ng8-Nf6 d2-d4 $(1) $(2) $(3)",
     "$(1) Nf6xe4 e4xe5 Bf8-Bc5 Qd1-Qd5 !W",
@@ -61,4 +67,4 @@ for branch in branch_dict:
     print(branch_dict[branch])
     print("********************************************************")
 
-TreeMaker.generate_dot_flowchart(branch_dict, "../flowcharts/res.dot")
+TreeMaker.generate_dot_flowchart(branch_dict, sys.argv[1])
